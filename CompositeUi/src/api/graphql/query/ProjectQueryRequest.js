@@ -21,7 +21,13 @@ const query = Relay.QL`
       organization {
         id,
         name,
-        slug
+        slug,
+        organization_members {
+           id,
+        },
+        owners {
+          id
+        }
       },
       tasks(first: -1) {
         edges {
