@@ -20,17 +20,13 @@ import Button from './../../component/Button';
 import FormActions from './../../component/FormActions';
 import LoadingSpinner from './../../component/LoadingSpinner';
 import {Row, RowColumn} from './../../component/Grid';
-import SelectorOption from './../../component/SelectorOption';
-import Thumbnail from './../../component/Thumbnail';
+import CardExtended from './../../component/CardExtended';
+import UserThumbnail from './../../component/UserThumbnail';
 
 @connect(state => ({task: state.currentProject.selectedTask}))
 class Show extends React.Component {
-  assignee(task) {
-    return !task.assignee.first_name ? 'Dummy assignee' : `${task.assignee.first_name} ${task.assignee.last_name}`;
-  }
-
-  creator(task) {
-    return !task.creator.first_name ? 'Dummy creator' : `${task.creator.first_name} ${task.creator.last_name}`;
+  username(user) {
+    return !user.first_name ? `@${user.user_name}` : `${user.first_name} ${user.last_name}`;
   }
 
   render() {
@@ -54,30 +50,24 @@ class Show extends React.Component {
         </Row>
         <Row className="task-show__fields">
           <RowColumn small={6}>
-            <SelectorOption
-              alignLeft
-              label="Assignee"
-              text={this.assignee(task)}
-              thumbnail={<Thumbnail image={null} text={this.assignee(task)}/>}
-              value="1"
-            />
+            <CardExtended subtitle="Assignee"
+                          thumbnail={<UserThumbnail user={task.assignee}/>}
+                          title={this.username(task.assignee)}/>
           </RowColumn>
           <RowColumn small={6}>
-            <SelectorOption
-              alignLeft
-              label="Creator"
-              text={this.creator(task)}
-              thumbnail={<Thumbnail image={null} text={this.creator(task)}/>}
-              value="1"
-            />
+            <CardExtended subtitle="Creator"
+                          thumbnail={<UserThumbnail user={task.creator}/>}
+                          title={this.username(task.creator)}/>
           </RowColumn>
         </Row>
         <Row className="task-show__fields">
           <RowColumn small={6}>
-            <SelectorOption alignLeft label="Progress" text={task.progress} value="1"/>
+            <CardExtended subtitle="Progress"
+                          title={task.progress}/>
           </RowColumn>
           <RowColumn small={6}>
-            <SelectorOption alignLeft label="Priority" text={task.priority} value="1"/>
+            <CardExtended subtitle="Priority"
+                          title={task.priority}/>
           </RowColumn>
         </Row>
         <Row>
